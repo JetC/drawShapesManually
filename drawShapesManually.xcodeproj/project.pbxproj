@@ -16,6 +16,7 @@
 		DF7001BC1A09BCF4003103B4 /* drawShapesManuallyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DF7001BB1A09BCF4003103B4 /* drawShapesManuallyTests.m */; };
 		DF7001C71A09C318003103B4 /* Point.m in Sources */ = {isa = PBXBuildFile; fileRef = DF7001C61A09C318003103B4 /* Point.m */; };
 		DFF87B101A230CB60065140E /* ContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF87B0F1A230CB60065140E /* ContainerView.m */; };
+		DFF87B131A23103B0065140E /* PointView.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF87B121A23103B0065140E /* PointView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +47,8 @@
 		DF7001C61A09C318003103B4 /* Point.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Point.m; sourceTree = "<group>"; };
 		DFF87B0E1A230CB60065140E /* ContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContainerView.h; sourceTree = "<group>"; };
 		DFF87B0F1A230CB60065140E /* ContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContainerView.m; sourceTree = "<group>"; };
+		DFF87B111A23103B0065140E /* PointView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PointView.h; sourceTree = "<group>"; };
+		DFF87B121A23103B0065140E /* PointView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PointView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +98,8 @@
 				DF7001C61A09C318003103B4 /* Point.m */,
 				DFF87B0E1A230CB60065140E /* ContainerView.h */,
 				DFF87B0F1A230CB60065140E /* ContainerView.m */,
+				DFF87B111A23103B0065140E /* PointView.h */,
+				DFF87B121A23103B0065140E /* PointView.m */,
 				DF7001A91A09BCF3003103B4 /* Main.storyboard */,
 				DF7001AC1A09BCF3003103B4 /* Images.xcassets */,
 				DF7001AE1A09BCF3003103B4 /* LaunchScreen.xib */,
@@ -234,6 +239,7 @@
 				DF7001A51A09BCF3003103B4 /* AppDelegate.m in Sources */,
 				DF7001A21A09BCF3003103B4 /* main.m in Sources */,
 				DFF87B101A230CB60065140E /* ContainerView.m in Sources */,
+				DFF87B131A23103B0065140E /* PointView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "Point.h"
 #import "ContainerView.h"
+#import "PointView.h"
 
 @interface ViewController ()
 
@@ -21,7 +22,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.view addSubview:[[ContainerView alloc] initWithFrame:self.view.frame]];
+    [self.view addSubview:[[PointView alloc] initWithFrame:self.view.frame]];
 
 }
 

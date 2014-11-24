@@ -11,9 +11,9 @@
 @interface SFPoint()
 
 @property (readwrite) BOOL isInitialized;
+@property (readwrite) CGPoint point;
 
 @end
-
 
 @implementation SFPoint
 
@@ -23,6 +23,21 @@
     self.x = 0;
     self.y = 0;
     self.isInitialized = NO;
+    return self;
+}
+
+- (SFPoint *)initWithX:(float)x y:(float)y
+{
+    self = [super init];
+    CGPoint point = CGPointMake(x, y);
+    self.point = point;
+    return self;
+}
+
+- (SFPoint *)initWithPoint:(CGPoint)point
+{
+    self = [super init];
+    self.point = point;
     return self;
 }
 

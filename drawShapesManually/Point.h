@@ -14,7 +14,9 @@
 @property (readonly) BOOL isInitialized;
 @property (nonatomic) float x;
 @property (nonatomic) float y;
-@property (readonly) CGPoint point;
+@property (readonly, nonatomic) CGPoint point;
 
+- (SFPoint *)initWithPoint:(CGPoint)point;
+- (SFPoint *)initWithX:(float)x y:(float)y;
 
 @end
