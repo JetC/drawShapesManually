@@ -1,5 +1,5 @@
 //
-//  ContainerView.h
+//  TuKeViewController.h
 //  drawShapesManually
 //
 //  Created by 孙培峰 on 11/24/14.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ContainerView : UIView
+@interface TuKeViewController : UIViewController
 
 @end

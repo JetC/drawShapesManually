@@ -6,18 +6,17 @@
 //  Copyright (c) 2014 孙培峰. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "CircleViewController.h"
 #import "Point.h"
-#import "ContainerView.h"
 #import "PointView.h"
 
-@interface ViewController ()
+@interface CircleViewController ()
 
 
 
 @end
 
-@implementation ViewController
+@implementation CircleViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
