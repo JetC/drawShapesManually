@@ -55,8 +55,7 @@
 
 - (CGPoint)point
 {
-    CGPoint point = CGPointMake(self.x, self.y);
-    return point;
+    return _point;
 }
 
 @end

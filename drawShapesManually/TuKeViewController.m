@@ -13,7 +13,7 @@
 
 @property (nonatomic, strong) NSMutableArray *pointsFromText;
 @property (nonatomic, strong) NSMutableArray *remainingPoints;
-@property (nonatomic, strong) NSMutableArray *sortedPoints;
+//@property (nonatomic, strong) NSMutableArray *sortedPoints;
 @property (nonatomic, strong) NSMutableArray *convexHullPoints;
 @property CGPoint minimumPoint;
 
@@ -39,10 +39,10 @@
         [self.pointsFromText addObject:[NSValue valueWithCGPoint:point]];
     }
     self.remainingPoints = [[NSMutableArray alloc]initWithArray:self.pointsFromText];
-    self.sortedPoints = [[NSMutableArray alloc]initWithCapacity:self.pointsFromText.count];
+//    self.sortedPoints = [[NSMutableArray alloc]initWithCapacity:self.pointsFromText.count];
     self.convexHullPoints = [[NSMutableArray alloc]initWithCapacity:self.pointsFromText.count];
     [self findMinimumPoint];
-    [self sortPointsAccordingToAngleWithVertex:self.minimumPoint];
+    [self findConvexHullPoints];
     
 }
 
@@ -63,34 +63,35 @@
     self.minimumPoint = CGPointMake(minX, minY);
 }
 
-//- (void)findConvexHullPoints
-//{
-//    for (NSInteger i = 0; i < self.pointsFromText.count ; i++) {
-//        if (i == 0) {
-//            [self sortPointsAccordingToAngleWithVertex:self.minimumPoint];
-//            [self.convexHullPoints addObject:self.sortedPoints[0]];
-//            continue;
-//        }
-//        [self sortPointsAccordingToAngleWithVertex:[(SFPoint *)self.sortedPoints[i] point]];
-//        [self.convexHullPoints addObject:self.sortedPoints[0]];
-//    }
-//    NSLog(@"Finished");
-//}
+- (void)findConvexHullPoints
+{
+    NSMutableArray *convexHullPoints = [[NSMutableArray alloc]init];
+    for (NSInteger i = 0; i < self.pointsFromText.count ; i++) {
+        if (i == 0) {
+            ;
+            [convexHullPoints addObject:[[self sortPointsAccordingToAngleWithVertex:self.minimumPoint] firstObject]];
+            continue;
+        }
+        [convexHullPoints addObject:[[self sortPointsAccordingToAngleWithVertex:((SFPoint *)[convexHullPoints lastObject]).point] firstObject]];
+    }
+    NSLog(@"Finished");
+}
 
 /**
  *  此处 Angle 指 minimumPoint 为顶点，与水平线和所给点的夹角
  */
 - (NSMutableArray *)sortPointsAccordingToAngleWithVertex:(CGPoint)vertex
 {
-    NSMutableArray *sortedPoints = [[NSMutableArray alloc]initWithArray:[self.sortedPoints mutableCopy]];
-    while (self.remainingPoints.count != 0) {
+    NSMutableArray *remainingPoints = [[NSMutableArray alloc]initWithArray:self.remainingPoints];
+    NSMutableArray *sortedPoints = [[NSMutableArray alloc]init];
+    while (remainingPoints.count != 0) {
         
-        CGPoint sourcePoint = [[self.remainingPoints firstObject] CGPointValue];
+        CGPoint sourcePoint = [[remainingPoints firstObject] CGPointValue];
         float arc = [self arcWithHorizonalLineWithPoint:vertex point:sourcePoint];
         SFPoint *point = [[SFPoint alloc]initWithX:sourcePoint.x y:sourcePoint.y];
         point.angleFromHorizonalLine = arc;
         [sortedPoints addObject:point];
-        [self.remainingPoints removeObjectAtIndex:0];
+        [remainingPoints removeObjectAtIndex:0];
     }
     sortedPoints = [[sortedPoints sortedArrayUsingComparator:^NSComparisonResult(SFPoint *obj1, SFPoint *obj2) {
         if (obj1.angleFromHorizonalLine < obj2.angleFromHorizonalLine) {
