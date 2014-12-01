@@ -74,6 +74,15 @@
         }
         [convexHullPoints addObject:[[self sortPointsAccordingToAngleWithVertex:((SFPoint *)[convexHullPoints lastObject]).point] firstObject]];
     }
+    for (NSInteger i = 0; i < convexHullPoints.count; i++) {
+        if (i != 0) {
+            if (((SFPoint *)convexHullPoints[i]).angleFromHorizonalLine < ((SFPoint *)convexHullPoints[i-1]).angleFromHorizonalLine) {
+                NSRange range;
+                range = NSMakeRange(i, convexHullPoints.count-i);
+                [convexHullPoints removeObjectsInRange:range];
+            }
+        }
+    }
     NSLog(@"Finished");
 }
 
