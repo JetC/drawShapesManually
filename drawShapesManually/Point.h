@@ -15,6 +15,7 @@
 @property (nonatomic) float x;
 @property (nonatomic) float y;
 @property (readonly, nonatomic) CGPoint point;
+@property float angleFromHorizonalLine;
 
 - (SFPoint *)initWithPoint:(CGPoint)point;
 - (SFPoint *)initWithX:(float)x y:(float)y;
