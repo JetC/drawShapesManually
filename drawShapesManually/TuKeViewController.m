@@ -33,7 +33,7 @@
         }
         NSMutableString *mutableString = [[[NSMutableString stringWithString:pointSourceString] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] mutableCopy];
         NSArray *separatedPointString = [mutableString componentsSeparatedByString:@"   "];
-        CGPoint point = CGPointFromString([NSString stringWithFormat:@"{%@,%@}",separatedPointString[0],separatedPointString[1]]);
+        CGPoint point = CGPointFromString([NSString stringWithFormat:@"{%@,%@}",separatedPointString[0],[NSString stringWithFormat:@"%f", ([separatedPointString[1] floatValue]+200)]]);
         
         [self.pointsFromText addObject:[NSValue valueWithCGPoint:point]];
     }
