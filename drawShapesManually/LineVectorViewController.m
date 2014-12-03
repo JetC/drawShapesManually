@@ -25,8 +25,8 @@
     // Do any additional setup after loading the view.
     _point1 = CGPointMake(100, 100);
     _point2 = CGPointMake(200, 200);
-    _point3 = CGPointMake(250, 230);
-    _point4 = CGPointMake(300, 220);
+    _point3 = CGPointMake(250, 250);
+    _point4 = CGPointMake(400, 300);
     
     NSArray *arr = [NSArray arrayWithObjects:[NSValue valueWithCGPoint:_point1],[NSValue valueWithCGPoint:_point2],[NSValue valueWithCGPoint:_point3],[NSValue valueWithCGPoint:_point4],nil];
     [self drawPoints:arr];
@@ -44,17 +44,11 @@
 - (void)drawLinesThroughMiddleLinesOfPoint:(CGPoint)point1 point2:(CGPoint)point2
 {
     CGFloat arc = [self arcWithHorizonalLineWithPoint:point1 point:point2];
-//    CGFloat arc2 = [self arcWithHorizonalLineWithPoint:_point2 point:_point3];
-//    CGFloat arc3 = [self arcWithHorizonalLineWithPoint:_point3 point:_point4];
-    
     arc = -(90-arc);
-//    arc2 = -(90-arc2);
-//    arc3 = -(90-arc3);
-//    NSLog(@"Arcs from horizonal (Up is Positive) are : %f,%f,%f",arc1,arc2,arc3);
     
     CGPoint middlePoint1 = [self middlePointOfPoint1:point1 point2:point2];
-    CGPoint sidePoint11 = [self pointFromMiddlePoint:middlePoint1 withAngle:arc distance:30];
-    CGPoint sidePoint12 = [self pointFromMiddlePoint:middlePoint1 withAngle:arc distance:-30];
+    CGPoint sidePoint11 = [self pointFromMiddlePoint:middlePoint1 withAngle:arc distance:90];
+    CGPoint sidePoint12 = [self pointFromMiddlePoint:middlePoint1 withAngle:arc distance:-90];
     
     NSArray *middlePointsAsset1 = @[[NSValue valueWithCGPoint:sidePoint11],[NSValue valueWithCGPoint:middlePoint1],[NSValue valueWithCGPoint:sidePoint12]];
     [self drawPoints:middlePointsAsset1];
@@ -103,7 +97,7 @@
 
 - (CGPoint)middlePointOfPoint1:(CGPoint)point1 point2:(CGPoint)point2
 {
-    return CGPointMake(point1.x/2+point2.y/2, point1.y/2+point2.y/2);
+    return CGPointMake((point1.x+point2.x)/2, (point1.y+point2.y)/2);
 }
 
 - (CGPoint)pointFromMiddlePoint:(CGPoint)middlePoint withAngle:(CGFloat)angle distance:(CGFloat)distance
