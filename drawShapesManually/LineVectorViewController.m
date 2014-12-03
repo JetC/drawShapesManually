@@ -14,7 +14,7 @@
 @property CGPoint point2;
 @property CGPoint point3;
 @property CGPoint point4;
-
+//@property (nonatomic, strong) NSMutableArray *pointsArray;
 
 @end
 
@@ -27,13 +27,47 @@
     _point2 = CGPointMake(200, 200);
     _point3 = CGPointMake(250, 230);
     _point4 = CGPointMake(300, 220);
-    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(10, 0, 300, 300)];
-    view.backgroundColor = [UIColor whiteColor];
+    
+    NSArray *arr = [NSArray arrayWithObjects:[NSValue valueWithCGPoint:_point1],[NSValue valueWithCGPoint:_point2],[NSValue valueWithCGPoint:_point3],[NSValue valueWithCGPoint:_point4],nil];
+    [self drawPoints:arr];
+    
+    [self drawLinesThroughMiddleLinesOfPoint:_point1 point2:_point2];
+    [self drawLinesThroughMiddleLinesOfPoint:_point2 point2:_point3];
+    [self drawLinesThroughMiddleLinesOfPoint:_point3 point2:_point4];
+
+   
+
+    
+    
+}
+
+- (void)drawLinesThroughMiddleLinesOfPoint:(CGPoint)point1 point2:(CGPoint)point2
+{
+    CGFloat arc = [self arcWithHorizonalLineWithPoint:point1 point:point2];
+//    CGFloat arc2 = [self arcWithHorizonalLineWithPoint:_point2 point:_point3];
+//    CGFloat arc3 = [self arcWithHorizonalLineWithPoint:_point3 point:_point4];
+    
+    arc = -(90-arc);
+//    arc2 = -(90-arc2);
+//    arc3 = -(90-arc3);
+//    NSLog(@"Arcs from horizonal (Up is Positive) are : %f,%f,%f",arc1,arc2,arc3);
+    
+    CGPoint middlePoint1 = [self middlePointOfPoint1:point1 point2:point2];
+    CGPoint sidePoint11 = [self pointFromMiddlePoint:middlePoint1 withAngle:arc distance:30];
+    CGPoint sidePoint12 = [self pointFromMiddlePoint:middlePoint1 withAngle:arc distance:-30];
+    
+    NSArray *middlePointsAsset1 = @[[NSValue valueWithCGPoint:sidePoint11],[NSValue valueWithCGPoint:middlePoint1],[NSValue valueWithCGPoint:sidePoint12]];
+    [self drawPoints:middlePointsAsset1];
+}
+
+- (void)drawPoints:(NSArray *)pointsArray
+{
+    UIView *view = [[UIView alloc]initWithFrame:self.view.frame];
+    view.backgroundColor = [UIColor clearColor];
     [self.view addSubview:view];
     UIBezierPath *path = [UIBezierPath bezierPath];
-    NSArray *arr = [NSArray arrayWithObjects:[NSValue valueWithCGPoint:_point1],[NSValue valueWithCGPoint:_point2],[NSValue valueWithCGPoint:_point3],[NSValue valueWithCGPoint:_point4], nil ,nil];
-    NSIndexSet *set = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, arr.count)];
-    [arr enumerateObjectsAtIndexes:set options:0 usingBlock:^(NSValue *pointValue, NSUInteger idx, BOOL *stop){
+    NSIndexSet *set = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, pointsArray.count)];
+    [pointsArray enumerateObjectsAtIndexes:set options:0 usingBlock:^(NSValue *pointValue, NSUInteger idx, BOOL *stop){
         
         CGPoint point = [pointValue CGPointValue];
         [path addLineToPoint:point];
@@ -44,22 +78,18 @@
         rect.origin.y = point.y;
         rect.size.width = 4;
         rect.size.height = 4;
-
+        
         UIBezierPath *arc = [UIBezierPath bezierPathWithOvalInRect:rect];
         [path appendPath:arc];
     }];
     //第三、UIBezierPath和CAShapeLayer关联
     CAShapeLayer *lineLayer = [CAShapeLayer layer];
-    lineLayer.frame = CGRectMake(0, 150, 320, 400);
+    lineLayer.frame = self.view.frame;
     lineLayer.fillColor = [UIColor greenColor].CGColor;
     lineLayer.path = path.CGPath;
     lineLayer.strokeColor = [UIColor greenColor].CGColor;
     [view.layer addSublayer:lineLayer];
-}
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (CGFloat)arcWithHorizonalLineWithPoint:(CGPoint)startPoint point:(CGPoint)endPoint
@@ -69,6 +99,18 @@
     float bearingDegrees = bearingRadians*180/M_PI;
     bearingDegrees = (bearingDegrees > 0.0 ? bearingDegrees : (bearingDegrees+360));
     return bearingDegrees;
+}
+
+- (CGPoint)middlePointOfPoint1:(CGPoint)point1 point2:(CGPoint)point2
+{
+    return CGPointMake(point1.x/2+point2.y/2, point1.y/2+point2.y/2);
+}
+
+- (CGPoint)pointFromMiddlePoint:(CGPoint)middlePoint withAngle:(CGFloat)angle distance:(CGFloat)distance
+{
+    CGFloat x = middlePoint.x + cosf(angle/180*M_PI)*distance;
+    CGFloat y = middlePoint.y + sinf(angle/180*M_PI)*distance;
+    return CGPointMake(x, y);
 }
 
 /*
